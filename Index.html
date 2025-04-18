@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kho Đề khảo sát chất lượng</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .thumbnail-container {
+            margin: 10px;
+            border: 1px solid #ddd;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            width: 150px;
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            position: relative; /* Để định vị nút lưu bên trong */
+        }
+
+        .thumbnail {
+            max-width: 90%;
+            max-height: 90%;
+            display: block;
+            object-fit: contain;
+        }
+
+        /* CSS cho nút lưu */
+        .save-button {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            cursor: pointer;
+            opacity: 0; /* Ẩn ban đầu */
+            transition: opacity 0.3s ease;
+        }
+
+        .thumbnail-container:hover .save-button {
+            opacity: 1; /* Hiển thị khi di chuột qua thumbnail */
+        }
+
+        /* CSS cho trang phóng to */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .zoomed-image-container {
+            position: relative; /* Để định vị nút lưu trong ảnh phóng to */
+            max-width: 95%;
+            max-height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .zoomed-image {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            object-fit: contain;
+        }
+
+        .zoomed-save-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            z-index: 11; /* Đảm bảo nút lưu trên ảnh phóng to */
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .close-button:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="thumbnail-container">
+        <img src="de1.jpg" class="thumbnail" data-full-image="de1.jpg" alt="Đề 1">
+        <div class="save-button" data-image-url="de1.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="cv/de2.jpg" class="thumbnail" data-full-image="cv/de2.jpg" alt="Đề 2">
+        <div class="save-button" data-image-url="cv/de2.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de3.jpg" class="thumbnail" data-full-image="de3.jpg" alt="Đề 3">
+        <div class="save-button" data-image-url="de3.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de4(1).jpg" class="thumbnail" data-full-image="de4(1).jpg" alt="Đề 4 trang 1">
+        <div class="save-button" data-image-url="de4(1).jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de4(2).jpg" class="thumbnail" data-full-image="de4(2).jpg" alt="Đề 4 trang 2">
+        <div class="save-button" data-image-url="de4(2).jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de5.jpg" class="thumbnail" data-full-image="de5.jpg" alt="Đề 5">
+        <div class="save-button" data-image-url="de5.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de6.jpg" class="thumbnail" data-full-image="cv/de6.jpg" alt="Đề 6">
+        <div class="save-button" data-image-url="cv/de6.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de7.jpg" class="thumbnail" data-full-image="de7.jpg" alt="Đề 7">
+        <div class="save-button" data-image-url="de7.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de8.jpg" class="thumbnail" data-full-image="de8.jpg" alt="Đề 8">
+        <div class="save-button" data-image-url="de8.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de9.jpg" class="thumbnail" data-full-image="de9.jpg" alt="Đề 9">
+        <div class="save-button" data-image-url="de9.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de10.jpg" class="thumbnail" data-full-image="de10.jpg" alt="Đề 10">
+        <div class="save-button" data-image-url="de10.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de11.jpg" class="thumbnail" data-full-image="de11.jpg" alt="Đề 11">
+        <div class="save-button" data-image-url="de11.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de12.jpg" class="thumbnail" data-full-image="de12.jpg" alt="Đề 12">
+        <div class="save-button" data-image-url="de12.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de13.jpg" class="thumbnail" data-full-image="de13.jpg" alt="Đề 13">
+        <div class="save-button" data-image-url="de13.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de14.jpg" class="thumbnail" data-full-image="de14.jpg" alt="Đề 14">
+        <div class="save-button" data-image-url="de14.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de15.jpg" class="thumbnail" data-full-image="de15.jpg" alt="Đề 15">
+        <div class="save-button" data-image-url="de15.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de16.jpg" class="thumbnail" data-full-image="de16.jpg" alt="Đề 16">
+        <div class="save-button" data-image-url="de16.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de17.jpg" class="thumbnail" data-full-image="de17.jpg" alt="Đề 17">
+        <div class="save-button" data-image-url="de17.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de18.jpg" class="thumbnail" data-full-image="de18.jpg" alt="Đề 18">
+        <div class="save-button" data-image-url="de18.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de19.jpg" class="thumbnail" data-full-image="de19.jpg" alt="Đề 19">
+        <div class="save-button" data-image-url="de19.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de20.jpg" class="thumbnail" data-full-image="de20.jpg" alt="Đề 20">
+        <div class="save-button" data-image-url="de20.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de21.jpg" class="thumbnail" data-full-image="de21.jpg" alt="Đề 21">
+        <div class="save-button" data-image-url="de21.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de22.jpg" class="thumbnail" data-full-image="de22.jpg" alt="Đề 22">
+        <div class="save-button" data-image-url="de22.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de23.jpg" class="thumbnail" data-full-image="de23.jpg" alt="Đề 23">
+        <div class="save-button" data-image-url="de23.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de24.jpg" class="thumbnail" data-full-image="de21.jpg" alt="Đề 24">
+        <div class="save-button" data-image-url="de24.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de25.jpg" class="thumbnail" data-full-image="de25.jpg" alt="Đề 25">
+        <div class="save-button" data-image-url="de25.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de26.jpg" class="thumbnail" data-full-image="de26.jpg" alt="Đề 26">
+        <div class="save-button" data-image-url="de26.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de27.jpg" class="thumbnail" data-full-image="de27.jpg" alt="Đề 27">
+        <div class="save-button" data-image-url="de27.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de28.jpg" class="thumbnail" data-full-image="de28.jpg" alt="Đề 28">
+        <div class="save-button" data-image-url="de28.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de29.jpg" class="thumbnail" data-full-image="de29.jpg" alt="Đề 29">
+        <div class="save-button" data-image-url="de29.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de30.jpg" class="thumbnail" data-full-image="de30.jpg" alt="Đề 30">
+        <div class="save-button" data-image-url="de30.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de31(1).jpg" class="thumbnail" data-full-image="de31(1).jpg" alt="Đề 31 trang 1">
+        <div class="save-button" data-image-url="de31(1).jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de31(2).jpg" class="thumbnail" data-full-image="de31(2).jpg" alt="Đề 31 trang 2">
+        <div class="save-button" data-image-url="de31(2).jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de32.jpg" class="thumbnail" data-full-image="de32.jpg" alt="Đề 32">
+        <div class="save-button" data-image-url="de32.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de33.jpg" class="thumbnail" data-full-image="de33.jpg" alt="Đề 33">
+        <div class="save-button" data-image-url="de33.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de34.jpg" class="thumbnail" data-full-image="de34.jpg" alt="Đề 34">
+        <div class="save-button" data-image-url="de34.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de35.jpg" class="thumbnail" data-full-image="de35.jpg" alt="Đề 35">
+        <div class="save-button" data-image-url="de35.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de36.jpg" class="thumbnail" data-full-image="de36.jpg" alt="Đề 36">
+        <div class="save-button" data-image-url="de36.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de37.jpg" class="thumbnail" data-full-image="de37.jpg" alt="Đề 37">
+        <div class="save-button" data-image-url="de37.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de38.jpg" class="thumbnail" data-full-image="de38.jpg" alt="Đề 38">
+        <div class="save-button" data-image-url="de38.jpg">Lưu</div>
+    </div>
+    <div class="thumbnail-container">
+        <img src="de39.jpg" class="thumbnail" data-full-image="de39.jpg" alt="Đề 39">
+        <div class="save-button" data-image-url="de39.jpg">Lưu</div>
+
+    <div id="imageOverlay" class="overlay">
+        <div class="zoomed-image-container">
+            <span class="close-button">&times;</span>
+            <img id="zoomedImage" class="zoomed-image" src="" alt="Ảnh phóng to">
+            <button id="zoomedSaveButton" class="zoomed-save-button">Lưu về</button>
+        </div>
+    </div>
+
+    <script>
+        const thumbnailContainers = document.querySelectorAll('.thumbnail-container');
+        const imageOverlay = document.getElementById('imageOverlay');
+        const zoomedImage = document.getElementById('zoomedImage');
+        const closeButton = document.querySelector('.close-button');
+        const zoomedSaveButton = document.getElementById('zoomedSaveButton');
+
+        let currentImageUrl = '';
+
+        thumbnailContainers.forEach(container => {
+            const thumbnail = container.querySelector('.thumbnail');
+            const saveButton = container.querySelector('.save-button');
+
+            thumbnail.addEventListener('click', () => {
+                const fullImageSrc = thumbnail.dataset.fullImage;
+                zoomedImage.src = fullImageSrc;
+                currentImageUrl = fullImageSrc;
+                imageOverlay.style.display = 'flex';
+            });
+
+            saveButton.addEventListener('click', (event) => {
+                event.stopPropagation(); // Ngăn chặn sự kiện click lan ra thumbnail
+                const imageUrl = saveButton.dataset.imageUrl;
+                downloadImage(imageUrl);
+            });
+        });
+
+        closeButton.addEventListener('click', () => {
+            imageOverlay.style.display = 'none';
+        });
+
+        imageOverlay.addEventListener('click', (event) => {
+            if (event.target === imageOverlay) {
+                imageOverlay.style.display = 'none';
+            }
+        });
+
+        zoomedSaveButton.addEventListener('click', () => {
+            if (currentImageUrl) {
+                downloadImage(currentImageUrl);
+            }
+        });
+
+        function downloadImage(imageUrl) {
+            const a = document.createElement('a');
+            a.href = imageUrl;
+            a.download = imageUrl.substring(imageUrl.lastIndexOf('/') + 1); // Tên file là phần cuối của URL
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
